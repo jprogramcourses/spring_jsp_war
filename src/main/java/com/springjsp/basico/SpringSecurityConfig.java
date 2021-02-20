@@ -2,6 +2,7 @@ package com.springjsp.basico;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,9 +53,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/", "/resources/bootstrap-4.4.1-dist/**", "/resources/css/**", "/resources/js/**", "/resources/images/**", "/autores/home").permitAll()
+				.antMatchers("/libros/indexLibros").hasAnyRole("ADMIN")
 				.antMatchers("/autores/**").hasAnyRole("ADMIN")
-				.antMatchers("/libro/detalle/**").hasAnyRole("USER")
-				.antMatchers("/nuevoLibro/**").hasAnyRole("ADMIN")
+				.antMatchers("/libros/**").hasAnyRole("ADMIN")
+				.antMatchers(HttpMethod.POST).hasAnyRole("ADMIN")
+				.antMatchers("/libros/ordenarLibros").hasAnyRole("ADMIN")
+				.antMatchers("/libros/filtrarLibro").hasAnyRole("ADMIN")
+				.antMatchers("/editoriales/**").hasAnyRole("ADMIN")
+//				.antMatchers("/libro/detalle/**").hasAnyRole("USER")
+//				.antMatchers("/nuevoLibro/**").hasAnyRole("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

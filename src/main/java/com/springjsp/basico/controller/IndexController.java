@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springjsp.basico.entity.Autor;
@@ -35,13 +36,12 @@ public class IndexController {
 	public String index(Model model){
 		model.addAttribute("titulo", "Listado de autores");
 		model.addAttribute("autores", autorService.findAll());
+		
 		return "home";
 	}
 	
 	@PostMapping(value="/filtrarAutor")
 	public String filtrarAutor(@RequestParam("inputFiltrarNombre") String nombre, @RequestParam("inputFiltrarPrimerApellido") String primerApellido, Model model) {
-		
-		System.out.println("Nombre y apellido " + nombre + ", " + primerApellido);
 		
 		model.addAttribute("titulo", "Listado de autores");
 		model.addAttribute("autores", autorService.findByNameAndByPrimerApellido(nombre, primerApellido));
@@ -59,6 +59,7 @@ public class IndexController {
 	}
 	
 	@GetMapping(value="/nuevoAutor")
+//	public String nuevoAutor(@ModelAttribute Autor autor) {
 	public String nuevoAutor(Model model) {
 		
 		model.addAttribute("autor", new Autor());
