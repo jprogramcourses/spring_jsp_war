@@ -36,6 +36,7 @@ public class IndexController {
 	public String index(Model model){
 		model.addAttribute("titulo", "Listado de autores");
 		model.addAttribute("autores", autorService.findAll());
+		
 		return "home";
 	}
 	
